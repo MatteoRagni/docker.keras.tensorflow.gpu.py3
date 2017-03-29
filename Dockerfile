@@ -14,13 +14,24 @@ LABEL maintainer "info@ragni.me"
 LABEL Version "1.0"
 
 RUN apt-get update
-RUN apt-get install -y hdf5-tools hdf5-helpers python3-hdf5storage
+
+# Keras dependencies installation:
+#  - hdf5 : save and restore trained weights
+#  - graphviz, pydot : display the model
+RUN apt-get install -y --no-upgrade --no-install-recommends  \
+  graphviz \
+  hdf5-helpers \
+  hdf5-tools \
+  python3-hdf5storage \
+  python3-pydot
+  
 RUN pip install keras
 RUN mkdir /nn
+RUN mkdir /log
 
 EXPOSE 8888
 EXPOSE 6006
 ENV KERAS_BACKEND tensorflow
 
 WORKDIR /src
-CMD bash
+CMD (tensorboard --logdir=/log --port=6006 --host=0.0.0.0 --purge-orphaned-data >/dev/null 2>/dev/null &) && bash
