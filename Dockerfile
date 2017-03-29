@@ -34,4 +34,6 @@ EXPOSE 6006
 ENV KERAS_BACKEND tensorflow
 
 WORKDIR /src
-CMD (tensorboard --logdir=/log --port=6006 --host=0.0.0.0 --purge-orphaned-data >/dev/null 2>/dev/null &) && bash
+CMD (tensorboard --logdir=/log --port=6006 --host=0.0.0.0 --purge-orphaned-data >/dev/null 2>/dev/null &) && \
+    (jupyter notebook --port=8888 --ip=0.0.0.0 >/tmp/jupyter.stdout 2>/tmp/jupyter.stderr &) && \
+    bash
