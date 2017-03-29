@@ -13,6 +13,8 @@ LABEL Vendor "Matteo Ragni"
 LABEL maintainer "info@ragni.me"
 LABEL Version "1.0"
 
+RUN apt-get update
+RUN apt-get install -y hdf5-tools hdf5-helpers python3-hdf5storage
 RUN pip install keras
 RUN mkdir /nn
 
