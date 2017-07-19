@@ -6,7 +6,7 @@
 #
 # Matteo Ragni - info@ragni.me
 
-FROM tensorflow/tensorflow:latest-gpu-py3
+FROM gcr.io/tensorflow/tensorflow:latest-gpu-py3
 
 LABEL Description "Python 3 Tensorkflow image with GPU support and Keras"
 LABEL Vendor "Matteo Ragni"
@@ -20,12 +20,14 @@ RUN apt-get update
 #  - graphviz, pydot : display the model
 RUN apt-get install -y --no-upgrade --no-install-recommends  \
   graphviz \
+  libtiff5 \
   hdf5-helpers \
   hdf5-tools \
   python3-hdf5storage \
-  python3-pydot
-  
-RUN pip install keras
+  python3-pydot \
+  python3-tk
+
+RUN pip install keras pandas sklearn ipdb
 RUN mkdir /nn
 RUN mkdir /log
 
